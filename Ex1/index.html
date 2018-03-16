@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Get Lat Long to Address</title>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj1kdLi8_iQSdMxGX-gGdKELCjF4J2HSo">
+	</script>
+
+</head>
+<body>
+		<div class="form-group row">
+			<div class="col-xs-2">
+			<input id="lat" type="text" placeholder="Latitude" class="form-control">
+			</div>
+			<div class="col-xs-2"> 
+			<input id="lng" type="text" placeholder="Longitude" class="form-control">
+			</div>
+		</div>
+				<button id="submit" onclick="geocodeLatLng(lat.value,lng.value)">Submit</button>
+
+				Show Address: <div id="address"><br></div>
+		
+	<script>
+		function geocodeLatLng(l1, l2) {
+			var geocoder = new google.maps.Geocoder;
+			var latlng = {
+				lat : parseFloat(l1),
+				lng : parseFloat(l2)
+			};
+			geocoder.geocode(
+				{
+					'location' : latlng
+				},
+				function(results, status) {
+
+					if (status === 'OK') {
+						if (results[0]) {
+							document.getElementById("address").innerHTML = results[0].formatted_address;
+						} else {
+								window.alert('No results');
+				 			}
+					} else {
+						window.alert('Geocoder failed due to: '
+						+ status);
+						}
+			});
+		};
+	</script>
+</body>
+</html>
