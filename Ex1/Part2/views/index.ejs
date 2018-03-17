@@ -1,70 +1,59 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>
     <%= title %>
   </title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 </head>
-
 <body>
   <div class="container" style="padding: 30px;margin-top:30px">
-    <h1 class="text-center">Calculate distance</h1>
+    <h1 class="text-center">Calculate Distance</h1>
     <h5 class="text-center">Enter 2 point with latitude and longtitude</h5>
-
-    <div class="col-xs-6 text-center">
-
+    <div class="col-xs-6 text-center" style="margin-left:24%;">
       <div class="col-xs-6">
         <div style="margin-top:30px">
-          <span style="margin-right:14px">Latitude</span>
-          <input type="text" name="latitude" id="lat-1"  class="form-control" value="10.7942852">
+          <span style="margin-right:14px">Latitude 1</span>
+          <input type="text" name="latitude" id="lat-1"  class="form-control" value="10.8546085">
         </div>
         <br>
         <div>
-          <span>Longtitude</span>
-          <input type="text" name="longtitude" id="lon-1"  class="form-control" value="106.6979556">
+          <span>Longtitude 1</span>
+          <input type="text" name="longtitude" id="lon-1"  class="form-control" value="106.7181448">
         </div>
       </div>
-
       <div class="col-xs-6">
         <div style="margin-top:30px">
-          <span style="margin-right:14px">Latitude</span>
-          <input type="text" name="latitude" id="lat-2" class="form-control" value="10.7942852">
+          <span style="margin-right:14px">Latitude 2</span>
+          <input type="text" name="latitude" id="lat-2" class="form-control" value="10.7598809">
         </div>
         <br>
         <div>
-          <span>Longtitude</span>
-          <input type="text" name="longtitude" id="lon-2"  class="form-control" value="106.6979556">
+          <span>Longtitude 2</span>
+          <input type="text" name="longtitude" id="lon-2"  class="form-control" value="106.6598289">
         </div>
       </div>
-        <button style="margin-top:30px" type="submit" value="OK" id="btn-2-points-submit">OK</button>
+        <button style="margin-top:30px;" type="submit" value="OK" id="btn-2-points-submit" class="btn btn-success"  >Submit </button>
     </div>
 
-    <div class="col-xs-6 distance-result" style="padding-top: 30px"></div>
-  </div>
+    <div class="col-xs-6 distance-result" style="padding-top: 30px;margin-left:40%;color:brown;"></div>
 
-  
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87lOkI_q4aaGtowovBQjNGycKz48zyhU&callback=initMap"
+  </div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj1kdLi8_iQSdMxGX-gGdKELCjF4J2HSo"
     async defer></script>
   <script>
     $('#btn-2-points-submit').on('click', function () {
-    latlongToDistance();
+    getDistance();
     });
-
-    function latlongToDistance() {
+    function getDistance() {
     $('.distance-result h4').remove();
-
     var lat1 = $('#lat-1').val().trim();
     var lon1 = $('#lon-1').val().trim();
     var lat2 = $('#lat-2').val().trim();
     var lon2 = $('#lon-2').val().trim();
-
     $.post('/api/calculate_distance', {
         lat1: lat1,
         lon1: lon1,
