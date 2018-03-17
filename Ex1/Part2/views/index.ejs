@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <div class="container" style="padding: 30px;margin-top:30px">
+    <h1 class="text-center">Calculate distance</h1>
+    <h5 class="text-center">Enter 2 point with latitude and longtitude</h5>
+
+    <div class="col-xs-6 text-center">
+
+      <div class="col-xs-6">
+        <div style="margin-top:30px">
+          <span style="margin-right:14px">Latitude</span>
+          <input type="text" name="latitude" id="lat-1"  class="form-control" value="10.7942852">
+        </div>
+        <br>
+        <div>
+          <span>Longtitude</span>
+          <input type="text" name="longtitude" id="lon-1"  class="form-control" value="106.6979556">
+        </div>
+      </div>
+
+      <div class="col-xs-6">
+        <div style="margin-top:30px">
+          <span style="margin-right:14px">Latitude</span>
+          <input type="text" name="latitude" id="lat-2" class="form-control" value="10.7942852">
+        </div>
+        <br>
+        <div>
+          <span>Longtitude</span>
+          <input type="text" name="longtitude" id="lon-2"  class="form-control" value="106.6979556">
+        </div>
+      </div>
+        <button style="margin-top:30px" type="submit" value="OK" id="btn-2-points-submit">OK</button>
+    </div>
+
+    <div class="col-xs-6 distance-result" style="padding-top: 30px"></div>
+  </div>
+
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87lOkI_q4aaGtowovBQjNGycKz48zyhU&callback=initMap"
+    async defer></script>
+  <script>
+    $('#btn-2-points-submit').on('click', function () {
+    latlongToDistance();
+    });
+
+    function latlongToDistance() {
+    $('.distance-result h4').remove();
+
+    var lat1 = $('#lat-1').val().trim();
+    var lon1 = $('#lon-1').val().trim();
+    var lat2 = $('#lat-2').val().trim();
+    var lon2 = $('#lon-2').val().trim();
+
+    $.post('/api/calculate_distance', {
+        lat1: lat1,
+        lon1: lon1,
+        lat2: lat2,
+        lon2: lon2
+    }, function (res) {
+        console.log(res)
+        $('.distance-result').append('<h4>Distance: ' + res.distance.toFixed(2) + ' km</h4>');
+    });
+  }
+  </script>
+</body>
+
+</html>
